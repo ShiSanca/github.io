@@ -20,18 +20,27 @@ function renderPage() {
         <article class="interview-body">
     `;
 
-    interviewData.content.forEach(item => {
-        if (item.role === 'quote') {
-            html += `<blockquote class="pull-quote scroll-reveal">${item.text}</blockquote>`;
-        } else {
-            const isGuest = item.role === 'guest' ? 'guest-row' : '';
-            html += `
-                <div class="chat-row scroll-reveal ${isGuest}">
-                    <div class="speaker-label ${item.role}">${item.name}</div>
-                    <div class="text">${item.text}</div>
-                </div>`;
-        }
-    });
+interviewData.content.forEach(item => {
+    if (item.role === 'quote') {
+        html += `<blockquote class="pull-quote scroll-reveal">${item.text}</blockquote>`;
+    } 
+    else if (item.role === 'image') {
+        // ★ 画像用のHTMLを追加
+        html += `
+            <div class="article-image scroll-reveal">
+                <img src="${item.url}" alt="interview photo" style="width:100%; height:auto; margin: 40px 0;">
+                ${item.caption ? `<p class="caption" style="text-align:center; font-size:0.8rem; color:#888; margin-top:-30px; margin-bottom:40px;">${item.caption}</p>` : ''}
+            </div>`;
+    }
+    else {
+        const isGuest = item.role === 'guest' ? 'guest-row' : '';
+        html += `
+            <div class="chat-row scroll-reveal ${isGuest}">
+                <div class="speaker-label ${item.role}">${item.name}</div>
+                <div class="text">${item.text}</div>
+            </div>`;
+    }
+});
 
     html += `</article>`;
     app.innerHTML = html;
@@ -70,3 +79,4 @@ window.addEventListener('scroll', () => {
 
 // ページの読み込み完了時に実行
 document.addEventListener('DOMContentLoaded', renderPage);
+
