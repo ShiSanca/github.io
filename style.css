@@ -132,4 +132,33 @@ footer {
 @media (max-width: 768px) {
     .hero-content h1 { font-size: 2rem; }
     .pull-quote { font-size: 1.5rem; }
+
+}
+
+/* 記事の中の画像スタイル */
+.article-image {
+    margin: 80px 0; /* 上下の余白を広めにとってモダンに */
+    width: 100%;
+    text-align: center;
+}
+
+.article-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px; /* 角を丸く */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08); /* 柔らかい影 */
+}
+
+.article-image .caption {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* モバイル対応：余白を少し詰める */
+@media (max-width: 768px) {
+    .article-image {
+        margin: 40px 0;
+    }
 }
