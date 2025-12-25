@@ -1,8 +1,8 @@
 const interviewData = {
     title: "挑戦の先に見える、<br>新しいスタンダード。",
     category: "SPECIAL INTERVIEW",
-    author: "インタビュー・文：山田 太郎 / 写真：佐藤 次郎",
-    lead: "ここに導入文が入ります。テキストを自由に書き換えてください。改行を入れたい場合は<br>タグが使えます。",
+    author: "インタビュー・文：ShiSanca / 写真：野田 洋次郎",
+    lead: "意識の変革。<br>先へ、もっと先へ。",
     // 会話の内容を配列で管理
     content: [
         { role: "interviewer", name: "編集部", text: "本日はよろしくお願いいたします。まずはプロジェクトのきっかけを教えてください。" },
