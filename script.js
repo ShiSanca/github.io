@@ -1,12 +1,14 @@
-// データを画面に反映させる関数
 function renderInterview() {
     const app = document.getElementById('app');
-    
-    // リード文
-    let html = `<section class="lead scroll-reveal"><p>${interviewData.lead}</p></section>`;
-    html += `<article class="interview-body">`;
+    if (!app) return;
 
-    // 本文のループ
+    let html = `
+        <section class="lead scroll-reveal">
+            <p>${interviewData.lead}</p>
+        </section>
+        <article class="interview-body">
+    `;
+
     interviewData.content.forEach(item => {
         if (item.role === 'quote') {
             html += `<blockquote class="pull-quote scroll-reveal">${item.text}</blockquote>`;
@@ -22,9 +24,33 @@ function renderInterview() {
 
     html += `</article>`;
     app.innerHTML = html;
+
+    // --- HTMLを作った直後にアニメーションの準備をする ---
+    startAnimations();
 }
 
-// 実行
-renderInterview();
+function startAnimations() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
 
-// --- 以降、前回のスクロールアニメーションなどのコードをそのまま貼り付け ---
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// ページが読み込まれたら実行
+window.addEventListener('DOMContentLoaded', renderInterview);
+
+// プログレスバー（ここはそのまま）
+window.onscroll = function() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const bar = document.getElementById("progress-bar");
+    if (bar) bar.style.width = scrolled + "%";
+};
