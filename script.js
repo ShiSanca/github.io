@@ -1,4 +1,15 @@
-function renderInterview() {
+function renderPage() {
+    // 1. タイトル部分の生成
+    const heroContent = document.getElementById('hero-content');
+    if (heroContent) {
+        heroContent.innerHTML = `
+            <span class="category">${interviewData.category}</span>
+            <h1>${interviewData.title}</h1>
+            <p class="author">${interviewData.author}</p>
+        `;
+    }
+
+    // 2. 記事本文の生成
     const app = document.getElementById('app');
     if (!app) return;
 
@@ -25,32 +36,37 @@ function renderInterview() {
     html += `</article>`;
     app.innerHTML = html;
 
-    // --- HTMLを作った直後にアニメーションの準備をする ---
-    startAnimations();
+    // 3. HTML生成後にアニメーション監視を開始
+    initScrollReveal();
 }
 
-function startAnimations() {
+function initScrollReveal() {
+    const observerOptions = {
+        threshold: 0.1
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
             }
         });
-    }, { threshold: 0.1 });
+    }, observerOptions);
 
+    // 生成された要素をすべて監視対象にする
     document.querySelectorAll('.scroll-reveal').forEach(el => {
         observer.observe(el);
     });
 }
 
-// ページが読み込まれたら実行
-window.addEventListener('DOMContentLoaded', renderInterview);
-
-// プログレスバー（ここはそのまま）
-window.onscroll = function() {
+// プログレスバーの制御
+window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
     const bar = document.getElementById("progress-bar");
     if (bar) bar.style.width = scrolled + "%";
-};
+});
+
+// ページの読み込み完了時に実行
+document.addEventListener('DOMContentLoaded', renderPage);
