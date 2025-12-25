@@ -1,0 +1,135 @@
+:root {
+    --primary-color: #1a1a1a;
+    --accent-color: #3a86ff;
+    --text-color: #333;
+    --bg-color: #ffffff;
+    --light-gray: #f8f9fa;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    line-height: 1.8;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+/* Progress Bar */
+#progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    z-index: 1000;
+}
+
+#progress-bar {
+    height: 100%;
+    background: var(--accent-color);
+    width: 0%;
+}
+
+/* Hero Section */
+.hero {
+    height: 80vh;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 20px 0;
+    letter-spacing: 0.05em;
+}
+
+.category {
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    font-size: 0.9rem;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* Layout */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 100px;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 30px;
+}
+
+/* Interview Rows */
+.chat-row {
+    margin-bottom: 60px;
+}
+
+.speaker-label {
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #888;
+}
+
+.interviewer { color: var(--accent-color); }
+
+.guest-row {
+    padding-left: 40px;
+}
+
+.text {
+    font-size: 1.1rem;
+}
+
+/* Quote */
+.pull-quote {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 100px 0;
+    color: var(--primary-color);
+    position: relative;
+}
+
+/* Scroll Animation Class */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer {
+    padding: 100px 0 50px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #999;
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 { font-size: 2rem; }
+    .pull-quote { font-size: 1.5rem; }
+}
