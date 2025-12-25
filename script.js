@@ -1,5 +1,10 @@
 function renderPage() {
-    // 1. タイトル部分の生成
+    // 1. ヒーローセクション（トップ画像）の設定
+    const heroSection = document.getElementById('hero-section');
+    if (heroSection && interviewData.heroImage) {
+        heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('${interviewData.heroImage}')`;
+    }
+
     const heroContent = document.getElementById('hero-content');
     if (heroContent) {
         heroContent.innerHTML = `
@@ -20,55 +25,52 @@ function renderPage() {
         <article class="interview-body">
     `;
 
-interviewData.content.forEach(item => {
-    if (item.role === 'quote') {
-        html += `<blockquote class="pull-quote scroll-reveal">${item.text}</blockquote>`;
-    } 
-    else if (item.role === 'image') {
-        // ★ 画像用のHTMLを追加
-        html += `
-            <div class="article-image scroll-reveal">
-                <img src="${item.url}" alt="interview photo" style="width:100%; height:auto; margin: 40px 0;">
-                ${item.caption ? `<p class="caption" style="text-align:center; font-size:0.8rem; color:#888; margin-top:-30px; margin-bottom:40px;">${item.caption}</p>` : ''}
-            </div>`;
-    }
-    else {
-        const isGuest = item.role === 'guest' ? 'guest-row' : '';
-        html += `
-            <div class="chat-row scroll-reveal ${isGuest}">
-                <div class="speaker-label ${item.role}">${item.name}</div>
-                <div class="text">${item.text}</div>
-            </div>`;
-    }
-});
+    // 本文データのループ処理
+    interviewData.content.forEach(item => {
+        if (item.role === 'quote') {
+            // 引用のデザイン
+            html += `<blockquote class="pull-quote scroll-reveal">${item.text}</blockquote>`;
+        } 
+        else if (item.role === 'image') {
+            // ★ 文中画像のデザイン
+            html += `
+                <div class="article-image scroll-reveal">
+                    <img src="${item.url}" alt="interview photo">
+                    ${item.caption ? `<p class="caption">${item.caption}</p>` : ''}
+                </div>`;
+        }
+        else {
+            // 発言者（編集部・ゲスト）のデザイン
+            const isGuest = item.role === 'guest' ? 'guest-row' : '';
+            html += `
+                <div class="chat-row scroll-reveal ${isGuest}">
+                    <div class="speaker-label ${item.role}">${item.name}</div>
+                    <div class="text">${item.text}</div>
+                </div>`;
+        }
+    });
 
     html += `</article>`;
     app.innerHTML = html;
 
-    // 3. HTML生成後にアニメーション監視を開始
+    // 3. アニメーションの開始
     initScrollReveal();
 }
 
+// スクロールでふわっと出す設定（変更なし）
 function initScrollReveal() {
-    const observerOptions = {
-        threshold: 0.1
-    };
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1 });
 
-    // 生成された要素をすべて監視対象にする
-    document.querySelectorAll('.scroll-reveal').forEach(el => {
-        observer.observe(el);
-    });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 }
 
-// プログレスバーの制御
+// プログレスバー（変更なし）
 window.addEventListener('scroll', () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -77,6 +79,4 @@ window.addEventListener('scroll', () => {
     if (bar) bar.style.width = scrolled + "%";
 });
 
-// ページの読み込み完了時に実行
 document.addEventListener('DOMContentLoaded', renderPage);
-
